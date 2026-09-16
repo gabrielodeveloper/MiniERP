@@ -83,12 +83,12 @@ namespace Negocios
             }
         }
 
-        public string ExcluirPedidoitem(PedidoItem pedidoItem)
+        public string ExcluirPedidoItem(int idPedidoItem)
         {
             try
             {
                 acessoDadosSqlServer.LimparParametros();
-                acessoDadosSqlServer.AdicionarParametros("@IDPedidoItem", pedidoItem.IDPedidoItem);
+                acessoDadosSqlServer.AdicionarParametros("@IDPedidoItem", idPedidoItem);
                 string idpedidoItem = acessoDadosSqlServer.ExecutarManipulacao(CommandType.StoredProcedure, "uspExcluirPedidoItem").ToString();
                 return idpedidoItem;
             }
