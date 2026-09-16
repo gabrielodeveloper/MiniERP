@@ -1,4 +1,5 @@
 ﻿using AcessoBancoDados;
+using Microsoft.Data.SqlClient;
 using ObjetoTransferencia;
 using System.Data;
 
@@ -29,7 +30,6 @@ namespace Negocios
 
                 throw new Exception($"Não foi possível inserir cliente, Detalhes: {ex.Message}"); ;
             }
-
         }
 
         public ClienteColecao ConsultarClientePorCodigoOuNome(int? idCliente, string nome)

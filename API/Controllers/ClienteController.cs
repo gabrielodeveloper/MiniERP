@@ -25,12 +25,30 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult Inserir([FromBody] Cliente cliente)
         {
-            string idCliente = clienteNegocio.InserirCliente(cliente);
-
-            return Ok(new
+            try
             {
-                idCliente = idCliente
-            });
+                string idCliente = clienteNegocio.InserirCliente(cliente);
+
+                return StatusCode(201, new
+                {
+                    idCliente = idCliente
+                });
+
+            }
+            catch (Exception ex)
+            {
+                if(ex.Message.Contains("Este cliente já possui cadastro")){
+                    return Conflict(new
+                    {
+                        mensagem = "Este cliente já possui cadastro"
+                    });
+                }
+    
+                return StatusCode(500, new
+                {
+                    mensagem = "Ocorreu um erro interno ao cadastrar o cliente."
+                });
+            }
         }
     }
 }

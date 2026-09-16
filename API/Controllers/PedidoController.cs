@@ -20,15 +20,27 @@ namespace API.Controllers
         {
             var pedido = pedidoNegocio.ConsultarPedido(idPedido);
 
-            return Ok(pedido);
+            return StatusCode(200, pedido);
         }
 
         [HttpPost]
         public IActionResult Inserir([FromBody] Pedido pedido)
         {
-            var idPedido = pedidoNegocio.InserirPedido(pedido);
+            try
+            {
+                var idPedido = pedidoNegocio.InserirPedido(pedido);
 
-            return Ok(idPedido);
+                return StatusCode(201, new
+                {
+                    idPedido = idPedido
+                });
+
+            }
+            catch (Exception ex)
+            {
+                
+                 throw new Exception($"Não foi possível inserir o pedido, Detalhes: {ex.Message}");
+            }
         }
     }
 }

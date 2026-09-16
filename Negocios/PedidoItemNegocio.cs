@@ -32,6 +32,23 @@ namespace Negocios
             }
         }
 
+        public string AlterarPedidoItem(PedidoItem pedidoItem)
+        {
+            try
+            {
+                acessoDadosSqlServer.LimparParametros();
+                acessoDadosSqlServer.AdicionarParametros("@IDPedidoItem", pedidoItem.IDPedidoItem);
+                acessoDadosSqlServer.AdicionarParametros("@Quantidade", pedidoItem.Quantidade);
+                string idPedidoItem = acessoDadosSqlServer.ExecutarManipulacao(CommandType.StoredProcedure, "uspAlterarPedidoItem").ToString();
+
+                return idPedidoItem;
+            }
+            catch (Exception ex)
+            {
+
+                throw new Exception($"Não foi possível alterar o item do pedido Detalhes: {ex.Message}");
+            }
+        }
         public PedidoItemColecao ConsultarPedidoItem(int idPedido)
         {
             try
@@ -46,6 +63,7 @@ namespace Negocios
                     PedidoItem pedidoItem = new PedidoItem();
 
                     pedidoItem.IDPedidoItem = Convert.ToInt32(row["IDPedidoItem"]);
+                    pedidoItem.IDPedido = Convert.ToInt32(row["IDPedido"]);
                     pedidoItem.Produto = new Produto();
                     pedidoItem.Produto.IDProduto = Convert.ToInt32(row["IDProduto"]);
                     pedidoItem.Produto.Descricao = Convert.ToString(row["Descricao"]);
@@ -62,6 +80,21 @@ namespace Negocios
             {
 
                 throw new Exception($"Não foi possível consultar o item do pedido, Detalhes: {ex.Message}");
+            }
+        }
+
+        public string ExcluirPedidoitem(PedidoItem pedidoItem)
+        {
+            try
+            {
+                acessoDadosSqlServer.LimparParametros();
+                acessoDadosSqlServer.AdicionarParametros("@IDPedidoItem", pedidoItem.IDPedidoItem);
+                string idpedidoItem = acessoDadosSqlServer.ExecutarManipulacao(CommandType.StoredProcedure, "uspExcluirPedidoItem").ToString();
+                return idpedidoItem;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Não foi possível excluir o item do pedido. Detalhes: {ex.Message}");
             }
         }
     }
