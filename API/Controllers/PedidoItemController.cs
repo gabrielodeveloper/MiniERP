@@ -28,5 +28,22 @@ namespace API.Controllers
 
             return Ok(item);
         }
+        [HttpPut]
+        public IActionResult Alterar(PedidoItem pedidoItem)
+        {
+            var item = pedidoItemNegocio.AlterarPedidoItem(pedidoItem);
+
+            return  Ok(item);
+        }
+
+        [HttpDelete("{idPedidoItem}")]
+        public IActionResult Excluir(int idPedidoItem)
+        {
+            var item = pedidoItemNegocio.ExcluirPedidoitem(
+                new PedidoItem { IDPedidoItem = idPedidoItem }
+                );
+
+            return Ok(item);
+        }
     }
 }

@@ -26,9 +26,29 @@ namespace API.Controllers
         [HttpPost]
         public IActionResult Inserir([FromBody] Produto produto)
         {
-            string idProduto = produtoNegocio.InserirProduto(produto);
+            try
+            {
+                string idProduto = produtoNegocio.InserirProduto(produto);
 
-            return Ok(idProduto);
+                return StatusCode(201, new
+                {
+                    idProduto = idProduto
+                });
+            }
+            catch (Exception ex)
+            {
+                if (ex.Message.Contains("Este produto já possui cadastro")){
+                    return Conflict(new
+                    {
+                        mensagem = "Este produto já possui cadastro"
+                    });
+                }
+
+                return StatusCode(500, new
+                {
+                    mensagem = "Ocorreu um erro interno ao cadastrar o produto."
+                });
+            }
         }
     }
 }
