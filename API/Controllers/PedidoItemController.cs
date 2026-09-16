@@ -37,11 +37,9 @@ namespace API.Controllers
         }
 
         [HttpDelete("{idPedidoItem}")]
-        public IActionResult Excluir(int idPedidoItem)
+        public IActionResult Excluir([FromRoute]int idPedidoItem)
         {
-            var item = pedidoItemNegocio.ExcluirPedidoitem(
-                new PedidoItem { IDPedidoItem = idPedidoItem }
-                );
+            var item = pedidoItemNegocio.ExcluirPedidoItem(idPedidoItem);
 
             return Ok(item);
         }
