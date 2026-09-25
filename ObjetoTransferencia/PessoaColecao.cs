@@ -1,6 +1,6 @@
 ﻿namespace ObjetoTransferencia
 {
-    public class ClienteColecao : List<Cliente>
+    public class PessoaColecao : List<Pessoa>
     {
     }
 }

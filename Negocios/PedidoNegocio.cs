@@ -64,5 +64,21 @@ namespace Negocios
                 throw new Exception($"Não foi possível consultar pedido, Detalhes: {ex.Message}");
             }
         }
+
+        public string CancelarPedido(int idPedido)
+        {
+            try
+            {
+                acessoDadosSqlServer.LimparParametros();
+                acessoDadosSqlServer.AdicionarParametros("@IDPedido", idPedido);
+                string idPedidoCancelado = acessoDadosSqlServer.ExecutarManipulacao(CommandType.StoredProcedure, "uspCancelarPedido").ToString();
+
+                return idPedidoCancelado;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Não foi possível cancelar o pedido. Detalhe: {ex.Message}");
+            }
+        }
     }
 }
