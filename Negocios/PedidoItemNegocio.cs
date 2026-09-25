@@ -49,7 +49,7 @@ namespace Negocios
                 throw new Exception($"Não foi possível alterar o item do pedido Detalhes: {ex.Message}");
             }
         }
-        public PedidoItemColecao ConsultarPedidoItem(int idPedido)
+        public PedidoItemColecao ConsultarPedidoItem(int? idPedido)
         {
             try
             {

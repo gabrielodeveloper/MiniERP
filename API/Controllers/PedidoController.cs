@@ -42,5 +42,13 @@ namespace API.Controllers
                  throw new Exception($"Não foi possível inserir o pedido, Detalhes: {ex.Message}");
             }
         }
+
+        [HttpPut("{idPedido}")]
+        public IActionResult Cancelar([FromRoute] int idPedido)
+        {
+            var pedido = pedidoNegocio.CancelarPedido(idPedido);
+
+            return StatusCode(200, idPedido);
+        }
     }
 }
