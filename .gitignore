@@ -1,3 +1,22 @@
+# Visual Studio
 .vs/
+*.suo
+*.user
+*.csproj.user
+
+# Build
 bin/
 obj/
+
+# Visual Studio Code
+.vscode/
+
+# Rider
+.idea/
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

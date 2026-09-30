@@ -1,5 +1,4 @@
 ﻿using AcessoBancoDados;
-using Microsoft.Data.SqlClient;
 using ObjetoTransferencia;
 using System.Data;
 
@@ -18,8 +17,7 @@ namespace Negocios
             try
             {
                 acessoDadosSqlServer.LimparParametros();
-                acessoDadosSqlServer.AdicionarParametros("@Nome", cliente.Nome);
-                acessoDadosSqlServer.AdicionarParametros("@CPF", cliente.CPF);
+                acessoDadosSqlServer.AdicionarParametros("@IDPessoa", cliente.IDPessoaCliente);
                 string IDCliente = acessoDadosSqlServer.ExecutarManipulacao(CommandType.StoredProcedure, "uspCadastrarCliente").ToString();
 
                 return IDCliente;
@@ -42,7 +40,7 @@ namespace Negocios
                 object nomeCliente = string.IsNullOrEmpty(nome) ? (object)DBNull.Value : nome;
 
                 acessoDadosSqlServer.LimparParametros();
-                acessoDadosSqlServer.AdicionarParametros("@IDCliente", codigo);
+                acessoDadosSqlServer.AdicionarParametros("@IDPessoa", codigo);
                 acessoDadosSqlServer.AdicionarParametros("@Nome", nomeCliente);
 
                 DataTable dataTableCliente = acessoDadosSqlServer.ExecutarConsulta(CommandType.StoredProcedure, "uspConsultarClientePorCodigoOuNome");
@@ -51,10 +49,11 @@ namespace Negocios
                 {
                     Cliente cliente = new Cliente();
 
-                    cliente.IDCliente = Convert.ToInt32(row["IDCliente"]);
+                    cliente.IDPessoaCliente = Convert.ToInt32(row["IDPessoaCliente"]);
+                    cliente.CPFCNPJ = Convert.ToString(row["CPFCNPJ"]);
                     cliente.Nome = Convert.ToString(row["Nome"]);
-                    cliente.CPF = Convert.ToString(row["CPF"]);
-                    cliente.Ativo = Convert.ToBoolean(row["Ativo"]);
+                    cliente.IDPessoaTipo = Convert.ToInt32(row["IDPessoaTipo"]);
+                    cliente.TipoPessoa = Convert.ToString(row["TipoPessoa"]);
 
                     clienteColecao.Add(cliente);
                 }
